@@ -1,0 +1,31 @@
+[
+  {
+    "prefix": "local",
+    "connection": {
+      "mysql": {
+        "host": "100.96.1.4",
+        "port": 3306,
+        "schema": "eld_aef",
+        "user": "root",
+        "password": "example",
+        "server_id": "1"
+      },
+      "meilisearch": {
+        "host": "http://localhost:7700",
+        "api_key": "MASTER_KEY"
+      },
+      "connector": {
+        "host": "http://localhost:8083"
+      }
+    },
+    "tables": {
+      "users": {
+        "include": ["*"],
+        "exclude": ["email_verify_link"]
+      },
+      "tenants": {
+        "include": ["*"]
+      }
+    }
+  }
+]

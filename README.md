@@ -29,3 +29,8 @@ Run the following command to start your application using Docker Compose:
 ```shell
 docker compose up -d
 ```
+
+
+```
+SHOW VARIABLES LIKE 'server_id';
+```
