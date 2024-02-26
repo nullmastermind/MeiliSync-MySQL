@@ -1,0 +1,31 @@
+# Dependency directories
+node_modules
+
+# Environment files
+.env
+
+# Git and version control
+.git
+.gitignore
+
+# Linters and formatters
+.eslintignore
+.prettierignore
+.prettierrc.js
+
+# Docker files (if you're building inside Docker, you might not need the Docker context itself)
+docker-compose.yaml
+Dockerfile
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.vscode
+.idea
+*.sublime-workspace
+
+# Logs
+npm-debug.log
+yarn-error.log
