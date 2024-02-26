@@ -8,3 +8,5 @@ To get your routable IP address, use the following command (maybe I don't know, 
 ```shell
 hostname -I | awk '{print $1}'
 ```
+
+You can also use the public IP address of your VPS, but it's less secure.
