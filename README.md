@@ -1,12 +1,31 @@
-# How to deploy?
+# How to Deploy
 
-1. Rename `.env.example` to `.env`
-2. Change `KAFKA_OUTSIDE_HOST` to `your.routable.ip.address`
+Follow these steps to deploy your application:
 
-To get your routable IP address, use the following command (maybe I don't know, I'm a Windows user):
+### 1. Rename Configuration File
+
+Rename the `.env.example` file to `.env`.
+
+```shell
+mv .env.example .env
+```
+
+### 2. Update Environment Variables
+
+Change the `KAFKA_OUTSIDE_HOST` variable in the `.env` file to your routable IP address.
+
+To obtain your routable IP address on your system, you can use the following command (note: this example might not directly apply to Windows, as it's commonly used in Unix-like systems):
 
 ```shell
 hostname -I | awk '{print $1}'
 ```
 
-You can also use the public IP address of your VPS, but it's less secure.
+Alternatively, you can use the public IP address of your VPS. However, be aware that using the public IP address is generally considered less secure.
+
+### 3. Launch the Application
+
+Run the following command to start your application using Docker Compose:
+
+```shell
+docker compose up -d
+```
