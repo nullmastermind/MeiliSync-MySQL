@@ -10,10 +10,12 @@ const kafka = new Kafka({
   clientId: 'Debezium watcher',
   brokers: ['100.96.1.4:9092'],
 });
+const consumer = kafka.consumer({ groupId: 'Meili' });
 
 const run = async () => {
+  await consumer.connect();
+
   const connectors = await getConnectors(configs);
-  const consumers: any[] = [];
 
   for (const i in connectors) {
     const connector = connectors[i];
@@ -21,9 +23,6 @@ const run = async () => {
     if (typeof connector !== 'string') continue;
 
     const config = configs[i];
-    const consumer = kafka.consumer({ groupId: connector });
-
-    await consumer.connect();
 
     for (const tableName of Object.keys(config.tables)) {
       const topic = [connector, config.connection.mysql.schema, tableName].join('.');
@@ -31,25 +30,19 @@ const run = async () => {
 
       console.log('Subscribed:', topic);
     }
-
-    consumers.push(consumer);
   }
 
-  await Promise.all(
-    consumers.map((consumer) => {
-      return consumer.run({
-        eachMessage: async ({ topic, partition, message }: any) => {
-          try {
-            const value = JSON.parse(message.value.toString());
+  await consumer.run({
+    eachMessage: async ({ topic, partition, message }: any) => {
+      try {
+        const value = JSON.parse(message.value.toString());
 
-            console.log('Value:', value);
-          } catch (e) {
-            console.error(e);
-          }
-        },
-      });
-    }),
-  );
+        console.log('Topic:', topic);
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
 };
 
 run().catch(console.error);
