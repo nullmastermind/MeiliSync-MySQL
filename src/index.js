@@ -1,4 +1,4 @@
-const { Kafka, Partitioners } = require('kafkajs');
+const { Kafka } = require('kafkajs');
 
 const kafka = new Kafka({
   clientId: 'Debezium watcher',
