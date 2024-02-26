@@ -1,4 +1,4 @@
-const { Kafka } = require('kafkajs');
+import { Kafka } from 'kafkajs';
 
 const kafka = new Kafka({
   clientId: 'Debezium watcher',
@@ -7,15 +7,10 @@ const kafka = new Kafka({
 const consumer = kafka.consumer({ groupId: 'eld_aef' });
 
 const run = async () => {
-  // Connect the consumer
   await consumer.connect();
-
-  // Subscribe to the topic
   await consumer.subscribe({ topic: 'eld_aef.eld_aef.companies', fromBeginning: true });
-
-  // Set up the message handler
   await consumer.run({
-    eachMessage: async ({ topic, partition, message }) => {
+    eachMessage: async ({ topic, partition, message }: any) => {
       const value = JSON.parse(message.value.toString());
       console.log({
         partition,
