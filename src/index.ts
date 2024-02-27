@@ -20,6 +20,13 @@ const run = async () => {
   await consumer.connect();
 
   const connectors = await getConnectors(configs);
+
+  if (connectors.length === 0) {
+    throw {
+      message: 'No connectors or the "connect" service is not ready yet.',
+    };
+  }
+
   const topicConfig: Record<string, Config2> = {};
 
   for (const i in connectors) {
@@ -72,7 +79,9 @@ const run = async () => {
   });
 };
 
-run().catch((e) => {
+run().catch(async (e) => {
   console.error(e);
+  // Wait for the other service to restart
+  await new Promise((rel) => setTimeout(rel, 5000));
   process.exit(1);
 });
