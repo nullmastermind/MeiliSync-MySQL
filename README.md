@@ -44,6 +44,12 @@ SHOW VARIABLES LIKE 'server_id';
 
 ### 3. Launch the Application
 
+Always make sure to run on the latest version:
+
+```shell
+docker pull nullmastermind/meili-sync-image:latest
+```
+
 Run the following command to start your application using Docker Compose:
 
 ```shell
