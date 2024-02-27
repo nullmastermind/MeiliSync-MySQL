@@ -13,9 +13,6 @@
       "meilisearch": {
         "host": "http://100.96.1.4:7700",
         "api_key": "MASTER_KEY"
-      },
-      "connector": {
-        "host": "http://100.96.1.4:8083"
       }
     },
     "tables": {

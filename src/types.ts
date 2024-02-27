@@ -13,9 +13,6 @@ export type Config = {
       host: string;
       api_key: string;
     };
-    connector: {
-      host: string;
-    };
   };
   tables: {
     [key: string]: {

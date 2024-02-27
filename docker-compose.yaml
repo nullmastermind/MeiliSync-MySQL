@@ -3,9 +3,9 @@ services:
   zookeeper:
     image: quay.io/debezium/zookeeper:2.5
     ports:
-      - "2181:2181"
-      - "2888:2888"
-      - "3888:3888"
+      - '2181:2181'
+      - '2888:2888'
+      - '3888:3888'
   kafka:
     image: quay.io/debezium/kafka:2.5
     ports:
@@ -22,7 +22,7 @@ services:
   connect:
     image: quay.io/debezium/connect:2.5
     ports:
-      - "8083:8083"
+      - '8083:8083'
     links:
       - kafka
     environment:
@@ -31,3 +31,12 @@ services:
       - CONFIG_STORAGE_TOPIC=my_connect_configs
       - OFFSET_STORAGE_TOPIC=my_connect_offsets
       - STATUS_STORAGE_TOPIC=my_connect_statuses
+  meilisync:
+    image: nullmastermind/meili-sync-image:latest
+    links:
+      - connect
+    environment:
+      - CONNECT_SERVER=connect:8083
+      - KAFKA_OUTSIDE_HOST=${KAFKA_OUTSIDE_HOST}
+    volumes:
+      - ./configs.json:/app/configs.json
