@@ -1,5 +1,5 @@
 import { forEach, map } from 'lodash';
-import { Meilisearch } from 'meilisearch';
+import { Index, Meilisearch } from 'meilisearch';
 import slugify from 'slugify';
 
 import { Config } from './types';
@@ -10,6 +10,7 @@ export type Config2 = Config & {
   tableName: string;
 };
 export const clients: Record<any, Meilisearch> = {};
+const indexes: Record<any, Index> = {};
 
 export const handleModify = async (
   topic: string,
@@ -20,12 +21,9 @@ export const handleModify = async (
 ) => {
   const newData = after || before;
   const syncData = getSyncData(config.tableName, newData as Record<any, any>, config);
-  const client = getClient(config);
 
   if (Object.keys(syncData).length > 1) {
-    const index = getIndex(topic);
-
-    await client.index(getIndex(topic)).addDocuments([syncData], {
+    await getIndex(config, topic).addDocuments([syncData], {
       primaryKey: 'referenceUid',
     });
   }
@@ -40,7 +38,6 @@ export const handleDelete = async (
 ) => {
   const newData = after || before;
   const syncData = getSyncData(config.tableName, newData as Record<any, any>, config);
-  const client = getClient(config);
 
   if (Object.keys(syncData).length > 1) {
   }
@@ -95,7 +92,14 @@ export const getClient = (config: Config | Config2) => {
   return clients[key];
 };
 
-export const getIndex = (topic: string) => {
+export const getIndex = (config: Config | Config2, topic: string) => {
   topic = topic.split('.').join('_');
-  return slugify(topic, { replacement: '_' });
+  topic = slugify(topic, { replacement: '_' });
+
+  if (!(topic in indexes)) {
+    const client = getClient(config);
+    indexes[topic] = client.index(topic);
+  }
+
+  return indexes[topic];
 };
