@@ -21,7 +21,7 @@ const run = async () => {
 
   const connectors = await getConnectors(configs);
 
-  if (connectors.length === 0) {
+  if (connectors.filter((v) => Boolean(v)).length === 0) {
     throw {
       message: 'No connectors or the "connect" service is not ready yet.',
     };
