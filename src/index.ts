@@ -27,6 +27,8 @@ const run = async () => {
     };
   }
 
+  console.log('connectors:', JSON.stringify(connectors));
+
   const topicConfig: Record<string, Config2> = {};
 
   for (const i in connectors) {
