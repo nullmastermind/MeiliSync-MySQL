@@ -2,7 +2,7 @@ import { forEach, map } from 'lodash';
 
 import { Config } from './types';
 
-type Op = 'c' | 'u'; // create/update
+type Op = 'c' | 'u' | 'd'; // create/update
 type Data = Record<any, any> | null;
 export type Config2 = Config & {
   tableName: string;
