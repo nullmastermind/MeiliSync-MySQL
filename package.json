@@ -7,7 +7,8 @@
     "build": "rimraf dist && tsc",
     "dev": "ts-node src/index.ts",
     "start": "node dist/index.js",
-    "build-docker": "docker build -t nullmastermind/meili-sync-image ."
+    "docker:build": "docker build -t nullmastermind/meili-sync-image .",
+    "docker:push": "docker push nullmastermind/meili-sync-image"
   },
   "dependencies": {
     "axios": "^1.6.7",
