@@ -1,3 +1,4 @@
+import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import { Kafka } from 'kafkajs';
 
@@ -5,10 +6,12 @@ import { Config2, handleDelete, handleModify } from './handle';
 import { getConnectors } from './lib';
 import { Config } from './types';
 
+dotenv.config();
+
 const configs: Config[] = JSON.parse(fs.readFileSync('configs.json', 'utf-8'));
 const kafka = new Kafka({
   clientId: 'Debezium watcher',
-  brokers: ['100.96.1.4:9092'],
+  brokers: [`${process.env.KAFKA_OUTSIDE_HOST}:9092`],
 });
 const consumer = kafka.consumer({ groupId: 'Meili' });
 

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^1.6.7",
+    "dotenv": "^16.4.5",
     "kafkajs": "^2.2.4",
     "lodash": "^4.17.21",
     "meilisearch": "^0.37.0",
@@ -17,6 +18,7 @@
   },
   "devDependencies": {
     "@lobehub/lint": "^1.21.0",
+    "@types/dotenv": "^8.2.0",
     "@types/node": "^20.11.20",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.5",
