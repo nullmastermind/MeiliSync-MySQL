@@ -20,8 +20,6 @@ export const handleModify = async (
 
   if (Object.keys(syncData).length > 1) {
   }
-
-  console.log(syncData);
 };
 
 export const handleDelete = async (
@@ -30,7 +28,13 @@ export const handleDelete = async (
   after: Data,
   op: Op,
   config: Config2,
-) => {};
+) => {
+  const newData = after || before;
+  const syncData = getSyncData(config.tableName, newData as Record<any, any>, config);
+
+  if (Object.keys(syncData).length > 1) {
+  }
+};
 
 const syncToMeili = async () => {};
 
