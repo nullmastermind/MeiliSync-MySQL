@@ -4,7 +4,7 @@ import slugify from 'slugify';
 
 import { Config } from './types';
 
-type Op = 'c' | 'u' | 'd'; // create/update
+type Op = 'c' | 'u' | 'd' | 'r'; // create/update/delete/read
 type Data = Record<any, any> | null;
 export type Config2 = Config & {
   tableName: string;
@@ -23,7 +23,8 @@ export const handleModify = async (
   const syncData = getSyncData(config.tableName, newData as Record<any, any>, config);
 
   if (Object.keys(syncData).length > 1) {
-    await getIndex(config, topic).addDocuments([syncData], {
+    const index = getIndex(config, topic);
+    await index.addDocuments([syncData], {
       primaryKey: 'referenceUid',
     });
   }
@@ -40,6 +41,8 @@ export const handleDelete = async (
   const syncData = getSyncData(config.tableName, newData as Record<any, any>, config);
 
   if (Object.keys(syncData).length > 1) {
+    const index = getIndex(config, topic);
+    await index.deleteDocument(syncData.referenceUid);
   }
 };
 
@@ -72,7 +75,7 @@ const getSyncData = (tableName: string, newData: Record<any, any>, config: Confi
     }
   });
 
-  syncData.referenceUid = map(primary, (v, k) => `${k}:${v}`).join();
+  syncData.referenceUid = map(primary, (v, k) => `${k}_${v}`).join('_');
 
   return syncData;
 };

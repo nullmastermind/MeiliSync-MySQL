@@ -44,13 +44,14 @@ const run = async () => {
       console.log('Topic:', topic);
 
       try {
+        if (!message?.value) return;
         const value = JSON.parse(message.value.toString());
         const {
           payload: { before, after, op },
         } = value;
         const config = topicConfig[topic];
 
-        if (['c', 'u'].includes(op)) await handleModify(topic, before, after, op, config);
+        if (['c', 'u', 'r'].includes(op)) await handleModify(topic, before, after, op, config);
         if (op === 'd') await handleDelete(topic, before, after, op, config);
 
         await consumer.commitOffsets([
