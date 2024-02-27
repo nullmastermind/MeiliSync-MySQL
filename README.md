@@ -32,6 +32,12 @@ To obtain your routable IP address on your system, you can use the following com
 hostname -I | awk '{print $1}'
 ```
 
+or
+
+```shell
+ifconfig | awk '/inet / && $2 != "127.0.0.1" {print $2; exit}'
+```
+
 Alternatively, you can use the public IP address of your VPS. However, be aware that using the public IP address is generally considered less secure.
 
 In the config, you see `server_id`, which is the `server_id` of your MySQL database. To get it, go to the MySQL console and run:
