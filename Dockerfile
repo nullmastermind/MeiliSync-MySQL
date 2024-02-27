@@ -1,9 +1,13 @@
-FROM node:20
+FROM node:20-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /app
+
+COPY package.json ./
+
+RUN npm install
+
 COPY . .
-RUN npm install --production
-ENV KAFKA_HOST=kafka
-ENV KAFKA_PORT=29092
+
+RUN npm run build
 
 CMD ["npm", "start"]
