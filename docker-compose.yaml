@@ -6,7 +6,6 @@ services:
       - '2181:2181'
       - '2888:2888'
       - '3888:3888'
-    restart: always
   kafka:
     image: quay.io/debezium/kafka:2.5
     ports:
@@ -20,7 +19,6 @@ services:
       - KAFKA_LISTENERS=INSIDE://:29092,OUTSIDE://:9092
       - KAFKA_ADVERTISED_LISTENERS=INSIDE://:29092,OUTSIDE://${KAFKA_OUTSIDE_HOST}:9092
       - KAFKA_INTER_BROKER_LISTENER_NAME=INSIDE
-    restart: always
   connect:
     image: quay.io/debezium/connect:2.5
     ports:
