@@ -32,7 +32,12 @@ export const getConnectors = async (configs: Config[]) => {
 
     try {
       // Check connector status and return a 200 code if it's okay.
-      await axios.get(connectServer + '/connectors/' + name + '/status');
+      const { data: status } = await axios.get(connectServer + '/connectors/' + name + '/status');
+
+      if (status.connector.state !== 'RUNNING') {
+        return [];
+      }
+
       connectors.push(name);
     } catch (e) {
       // Push null to keep the index
