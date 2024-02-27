@@ -36,7 +36,7 @@ services:
     links:
       - connect
     environment:
-      - CONNECT_SERVER=connect:8083
+      - CONNECT_SERVER=http://connect:8083
       - KAFKA_OUTSIDE_HOST=${KAFKA_OUTSIDE_HOST}
     volumes:
       - ./configs.json:/app/configs.json
