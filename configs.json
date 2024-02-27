@@ -20,10 +20,12 @@
     },
     "tables": {
       "users": {
+        "primary": ["id"],
         "include": ["*"],
         "exclude": ["email_verify_link"]
       },
       "tenants": {
+        "primary": ["id"],
         "include": ["*"]
       }
     }

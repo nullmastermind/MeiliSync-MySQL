@@ -19,8 +19,9 @@ export type Config = {
   };
   tables: {
     [key: string]: {
+      primary?: string[];
       include: string[];
-      exclude: string[];
+      exclude?: string[];
     };
   };
 };
